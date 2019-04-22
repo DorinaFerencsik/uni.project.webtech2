@@ -1,0 +1,73 @@
+users: {
+    _id: {
+        name: "",
+        windows: [
+            {
+                name: "string",
+                type: "string",
+                width: int,
+                height: int
+            },
+            {
+				name: "string",
+                type: "string",
+                width: int,
+                height: int
+            },
+
+        ]
+	}
+    _id2...
+},
+shutters: {
+    _id: {
+		sid: "string",
+        name: "string",
+        type: "string",
+        parts: [p1, p2, p3],
+		desc: "string"
+    },
+    _id: {
+        name: "string",
+        type: "string",
+        parts: [p1],
+		desc: "string"
+    }
+},
+orders: {
+    _id: {
+		oid: md5 id
+        customerId: cid,
+        shutterid: sid,
+        shutterColor: color,
+        windowName: windowName,
+        packaged: False/Signature,
+        shipment: {
+            preferredDay: ["Mon", "Tue"],
+            preferredDaypart:  ["AM","PM],
+            address: "string"
+        }
+		date: datetime,
+        packaged: false/Signature,
+        payed: false / signature (hash userid and date)
+		invoiceId: iid
+    }
+},
+invoices: {
+    _id: {
+		iid: md5 incoice id
+        date: datetime,
+        orderid: oid,
+        userid: uid
+
+    }
+},
+installations: {
+    _id: {
+        date: datetime,
+        orderid: oid,
+    }
+}
+
+
+use shutter_window

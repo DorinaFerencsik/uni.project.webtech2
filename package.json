@@ -1,0 +1,32 @@
+{
+  "name": "uni.project.webtech2",
+  "version": "1.0.0",
+  "description": "Project work for subject Web technologies 2. at University of Miskolc",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "body-parser": "^1.18.3",
+    "mongodb": "^3.2.3",
+    "assert": "^1.4.1",
+    "winston": "^3.2.1",
+    "md5.js": "^1.3.5",
+    "font-awesome": "^4.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DorinaFerencsik/uni.project.webtech2.git"
+  },
+  "author": "Dorina Ferencsik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DorinaFerencsik/uni.project.webtech2/issues"
+  },
+  "homepage": "https://github.com/DorinaFerencsik/uni.project.webtech2#readme"
+}
