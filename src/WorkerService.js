@@ -27,5 +27,8 @@ WorkerService.prototype.markOrder = function (request, success, error) {
     this.workerDAO.markOrderAsPacked(request, ()=>{success()}, (cause) => {error(cause)})
 };
 
+WorkerService.prototype.listInstallations = function (request, success, error) {
+    this.workerDAO.getInstallations(request, (installations)=>{success(installations)}, (cause) => {error(cause)})
+};
 
 module.exports = WorkerService;

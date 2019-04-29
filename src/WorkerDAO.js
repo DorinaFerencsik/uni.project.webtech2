@@ -5,6 +5,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'shutter_webshop';
 
 const orderCollection = 'orders';
+const installationCollection = 'installations';
 
 
 function getPendingOrders(request, callback) {
@@ -87,9 +88,27 @@ function markOrderAsPacked(request, success, error) {
     })
 }
 
+function getInstallations(request, success, error) {
+    var client = new MongoClient(url);
+    client.connect((err)=> {
+        assert.equal(null, err);
+
+        const db = client.db(dbName);
+        const collection = db.collection(installationCollection);
+
+        collection.find({ workerId: request['wid'] }).toArray((err, docs) => {
+            assert.equal(err, null);
+            success(docs)
+        });
+        client.close();
+
+    })
+}
+
 
 module.exports = {
     "getPendingOrders": getPendingOrders,
     "assignOrderToWorker": assignOrderToWorker,
-    "markOrderAsPacked": markOrderAsPacked
+    "markOrderAsPacked": markOrderAsPacked,
+    "getInstallations": getInstallations
 };
