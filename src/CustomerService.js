@@ -30,6 +30,7 @@ CustomerService.prototype.createOrder = function (request, callback) {
     request['date'] = new Date().toISOString();
     request['packaged'] = false;
     request['payed'] = false;
+    request['workerid'] = false
     request['oid'] = new md5().update(JSON.stringify({
         customer: request['customerId'],
         date: request['date']

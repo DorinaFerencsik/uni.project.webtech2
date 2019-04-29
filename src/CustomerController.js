@@ -4,7 +4,7 @@ var router = express.Router();
 var srs = require('./CustomerService');
 const customerService = new srs()
 
-router.get('/newCustomer', (req, res) => {
+router.post('/newCustomer', (req, res) => {
     customerService.createCustomer({name: "testing user name"},
         () => {res.status(200).send("Customer created")},
         (cause) => {res.status(400).send(cause)})
