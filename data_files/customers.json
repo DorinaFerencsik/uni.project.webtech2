@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5cbd8f15d44eb421c0e5500c"},"cid":"001","orders":[""],"name":"Test user","windows":[{"name":"testname","type":"normal","width":{"$numberInt":"150"},"height":{"$numberInt":"110"}}]}
+{"_id":{"$oid":"5cbdb6b4e9bc3f2ecc33551d"},"cid":"002","name":"testing user name"}
+{"_id":{"$oid":"5cbdb73bc3fd1713288cef6a"},"cid":"003","name":"testing user name"}
