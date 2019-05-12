@@ -10,15 +10,13 @@ var app = express();
 
 app.use(bodyParser.json());
 
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-// app.get('/',function (req,res) {
-//     res.send('../public/index.html');
-// });
 app.use('/customer', customerController);
 app.use('/worker', workerController);
 app.use('/manager', managerController);
 
-app.use(express.static('./public'));
+
 
 
 app.listen(port, ()=>{

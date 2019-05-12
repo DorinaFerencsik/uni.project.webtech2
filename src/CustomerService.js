@@ -43,4 +43,8 @@ CustomerService.prototype.listOrdersOfCustomer = function (customerId, callback)
     this.customerDAO.readOrdersOfCustomer(customerId, (orders) => {callback(orders)})
 };
 
+CustomerService.prototype.listShutters = function(callback) {
+    this.customerDAO.readShutters((shutters) => {callback(shutters)})
+}
+
 module.exports = CustomerService;

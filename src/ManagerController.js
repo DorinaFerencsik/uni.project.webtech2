@@ -28,7 +28,11 @@ router.post('/createInstallation', (req, res) => {
         (cause) => {res.status(400).send(cause)})
 });
 
-
+router.get('/listOrders', (req, res) => {
+    managerService.listOrders(
+        (orders) => {res.status(200).send(orders),
+            (cause) => {res.status(400).send(cause)}})
+});
 
 
 

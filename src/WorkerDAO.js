@@ -45,7 +45,6 @@ function assignOrderToWorker(request, success, error) {
                         }
                     }, (err,res)=>{
                         assert.equal(null, err);
-                        console.log('result after update: ', res);
                         success(res)
                     });
             }

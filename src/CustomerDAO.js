@@ -5,6 +5,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'shutter_webshop';
 const userCollection = 'users';
 const orderCollection = 'orders';
+const shutterCollection = 'shutters';
 
 function createCustomer(request, callback) {
     var client = new MongoClient(url);
@@ -109,6 +110,22 @@ function readWindowsOfCustomer(customerId, callback) {
     readCustomer(customerId, (result) => {callback(result.windows)});
 }
 
+function readShutters(callback) {
+    var client = new MongoClient(url);
+    client.connect((err)=>{
+        assert.equal(null, err);
+
+        const db = client.db(dbName);
+        const collection= db.collection(shutterCollection);
+
+        collection.find().toArray((err, docs) => {
+            assert.equal(err, null);
+            callback(docs)
+        });
+        client.close();
+    })
+}
+
 module.exports = {
     "createCustomer": createCustomer,
     "readCustomer" : readCustomer,
@@ -116,5 +133,6 @@ module.exports = {
     "readOrdersOfCustomer" : readOrdersOfCustomer,
     "createOrder" : createOrder,
     "createWindow": createWindow,
-    "readWindowsOfCustomer": readWindowsOfCustomer
+    "readWindowsOfCustomer": readWindowsOfCustomer,
+    "readShutters": readShutters
 };

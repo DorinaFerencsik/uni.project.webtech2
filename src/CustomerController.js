@@ -48,19 +48,13 @@ router.post('/defineWindow', (req, res) => {
     )
 });
 
-router.get('/listWindows', (req, res) => {
-    if (req.body['customerId'] == undefined || req.body['customerId'] =='') {
-        res.status(414).send('Customer ID must be defined');
-        return;
-    }
-
-    customerService.listWindowsOfCustomer(req.body['customerId'],
+router.get('/:customerId/listWindows', (req, res) => {
+    customerService.listWindowsOfCustomer(req.params.customerId,
         (windows) => {res.status(200).send(windows)},
         (cause) => {res.status(400).send(cause)}
     )
 });
 router.post('/createOrder', (req, res) => {
-    //TODO: add color handling
     if ( req.body['customerId'] == undefined || req.body['customerId'] =='') {
         res.status(414).send('Customer must be defined');
         return;
@@ -85,22 +79,26 @@ router.post('/createOrder', (req, res) => {
         res.status(414).send('Shipment address must be defined');
         return;
     }
-    customerService.createOrder({customerId: req.body['customerId'],shutterId: req.body['shutterId'],windowName:req.body['windowName'], shipment:req.body['shipment']},
+    if ( req.body['price'] == undefined || req.body['price'] =='') {
+        res.status(414).send('Price must be defined');
+        return;
+    }
+    customerService.createOrder({customerId: req.body['customerId'],shutterId: req.body['shutterId'],windowName:req.body['windowName'], shipment:req.body['shipment'], price: req.body['price']},
         () => {res.status(200).send('Order placed')},
         (cause) => res.status(400).send(cause))
 });
 
-router.get('/listOrders', (req, res) => {
-    if ( req.body['customerId'] == undefined || req.body['customerId'] =='') {
-        res.status(414).send('Customer must be defined');
-        return;
-    }
-    customerService.listOrdersOfCustomer(req.body['customerId'],
+router.get('/:customerId/listOrders', (req, res) => {
+    customerService.listOrdersOfCustomer(req.params.customerId,
         (orders) => {res.status(200).send(orders)},
         (cause) => res.status(400).send(cause))
 });
 
-
+router.get('/listShutters', (req, res) =>{
+    customerService.listShutters(
+        (shutters) => {res.status(200).send(shutters)},
+        (cause) => res.status(400).send(cause))
+});
 
 
 

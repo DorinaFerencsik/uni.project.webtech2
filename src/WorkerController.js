@@ -4,13 +4,8 @@ var router = express.Router();
 var ws = require('./WorkerService');
 const workerService = new ws();
 
-router.get('/listPendingOrders', (req, res) => {
-    if (req.body['workerId'] == undefined || req.body['workerId'] == '') {
-        res.status(400).send("Worker id must be defined");
-        return;
-    }
-
-    workerService.listPendingOrders({wid: req.body["workerId"]},
+router.get('/:workerId/listPendingOrders', (req, res) => {
+    workerService.listPendingOrders({wid: req.params.workerId},
         (orders) => {res.status(200).send(orders)},
         (cause) => {res.status(400).send(cause)})
 });
@@ -45,12 +40,12 @@ router.post('/markOrder', (req, res) => {
         (cause) => {res.status(400).send(cause)})
 });
 
-router.get('/listInstallations', (req, res) => {
-    if (req.body['workerId'] == undefined || req.body['workerId'] == '') {
-        res.status(400).send("Worker id must be defined");
-        return;
-    }
-    workerService.listInstallations({wid: req.body['workerId'], oid: req.body['orderId']},
+router.get('/:workerId/listInstallations', (req, res) => {
+    // if (req.body['workerId'] == undefined || req.body['workerId'] == '') {
+    //     res.status(400).send("Worker id must be defined");
+    //     return;
+    // }
+    workerService.listInstallations({wid: req.params.workerId},
         (installations) => {res.status(200).send(installations)},
         (cause) => {res.status(400).send(cause)})
 });

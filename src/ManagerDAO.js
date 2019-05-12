@@ -40,8 +40,26 @@ function createInstallation(request, callback, error) {
     })
 }
 
+function readOrders(callback) {
+    var client = new MongoClient(url);
+    client.connect((err)=> {
+        assert.equal(null, err);
+
+        const db = client.db(dbName);
+        const collection = db.collection(orderCollection);
+
+        collection.find().toArray((err, docs) => {
+            assert.equal(err, null);
+            callback(docs)
+        });
+        client.close();
+
+    })
+}
+
 
 
 module.exports = {
-    "createInstallation": createInstallation
+    "createInstallation": createInstallation,
+    "readOrders": readOrders
 };
