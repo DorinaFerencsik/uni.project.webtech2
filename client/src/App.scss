@@ -1,0 +1,9 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$card-backgroud: #074482 !default;
+$card-text: #fff !default;
+
+.role-card {
+  background-color: $card-backgroud;
+  color: $card-text
+}
