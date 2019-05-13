@@ -29,7 +29,7 @@ docker run --detach --network $MONGO_NETWORK_NAME --ip $MONGO_HOST_IP mongo
 mongoimport --host $MONGO_HOST_IP --db shutter_webshop --collection installations installations.json
 mongoimport --host $MONGO_HOST_IP --db shutter_webshop --collection users users.json
 mongoimport --host $MONGO_HOST_IP --db shutter_webshop --collection orders orders.json
-mongoimport --host $MONGO_HOST_IP --db shutter_webshop --collection users users.json
+mongoimport --host $MONGO_HOST_IP --db shutter_webshop --collection shutters shutters.json
 mongoimport --host $MONGO_HOST_IP --db shutter_webshop --collection workers workers.json
 
 mongo --host $MONGO_HOST_IP
