@@ -1,1 +1,3 @@
-{"_id":{"$oid":"5cbdd80dd44eb421c0e5500d"},"sid":"S01","name":"Testname","type":"plastic","parts":["louver","tilt bar","rail","stile"],"desc":"This is absolutely the best shutter in the world"}
+{"_id":{"$oid":"5cbdd80dd44eb421c0e5500d"},"sid":"S01","name":"Imaginary shutter","type":"plastic","parts":["louver","tilt bar","rail","stile"],"desc":"This is absolutely the best shutter in the world","price":{"$numberInt":"70"}}
+{"_id":{"$oid":"5cd71e9dccf1920b2ccfe9da"},"sid":"S02","name":"No. 1 Shutter","type":"wood","parts":["louver","rail","stile"],"desc":"Short description for shutter","price":{"$numberInt":"99"}}
+{"_id":{"$oid":"5cd72142ccf1920b2ccfe9db"},"sid":"S03","name":"Grandma's favourite","type":"plastic","parts":["tilt bar","rail","stile","louver"],"desc":"Shutter of our elders","price":{"$numberInt":"80"}}

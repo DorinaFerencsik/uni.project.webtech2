@@ -1,1 +1,2 @@
-{"_id":{"$oid":"5cc5cad1c17dd71668aefe56"},"date":"2019-04-24","orderId":"4f82dfc6258c9218984cd8d1792c5e28","workerId":"123456qwertz"}
+{"_id":{"$oid":"5cd95eedde841818407c6188"},"orderId":"7e0a10cfb0d0a91dec02558598d31525","date":{"$date":{"$numberLong":"1558303200000"}},"dayPart":"AM"}
+{"_id":{"$oid":"5cd964cfd81d042cf0d086af"},"date":{"$date":{"$numberLong":"1557871200000"}},"dayPart":"AM","orderId":"fbbc24ed38bafba6c0b1a2a6470d4f70"}
