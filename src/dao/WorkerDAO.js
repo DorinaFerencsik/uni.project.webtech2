@@ -95,7 +95,7 @@ function getInstallations(request, success, error) {
         const db = client.db(dbName);
         const collection = db.collection(installationCollection);
 
-        collection.find({ workerId: request['wid'] }).toArray((err, docs) => {
+        collection.find().toArray((err, docs) => {
             assert.equal(err, null);
             success(docs)
         });

@@ -2,9 +2,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 const port = 8080;
-const customerController = require('./src/CustomerController');
-const workerController = require('./src/WorkerController');
-const managerController = require('./src/ManagerController');
+const customerController = require('./src/controller/CustomerController');
+const workerController = require('./src/controller/WorkerController');
+const managerController = require('./src/controller/ManagerController');
 
 var app = express();
 

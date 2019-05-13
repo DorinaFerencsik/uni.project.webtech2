@@ -84,8 +84,6 @@ function createWindow(request, callback) {
         const db = client.db(dbName);
         const collection= db.collection(userCollection)
 
-        // To update many documents: updateMany
-        // To push multiple values to windows:  windows: {$each: [{obj1}, {obj2}]}
         collection.updateOne({cid : request['customerId']},
             {
                 $push: {

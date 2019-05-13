@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var ws = require('./WorkerService');
+var ws = require('../service/WorkerService');
 const workerService = new ws();
 
 router.get('/:workerId/listPendingOrders', (req, res) => {
@@ -40,12 +40,8 @@ router.post('/markOrder', (req, res) => {
         (cause) => {res.status(400).send(cause)})
 });
 
-router.get('/:workerId/listInstallations', (req, res) => {
-    // if (req.body['workerId'] == undefined || req.body['workerId'] == '') {
-    //     res.status(400).send("Worker id must be defined");
-    //     return;
-    // }
-    workerService.listInstallations({wid: req.params.workerId},
+router.get('/listInstallations', (req, res) => {
+    workerService.listInstallations(
         (installations) => {res.status(200).send(installations)},
         (cause) => {res.status(400).send(cause)})
 });

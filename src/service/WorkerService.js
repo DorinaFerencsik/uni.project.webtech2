@@ -5,7 +5,7 @@ function WorkerService(workerDAO) {
     if (workerDAO != undefined && workerDAO != null) {
         this.workerDAO = workerDAO;
     } else {
-        this.workerDAO = require('./WorkerDAO');
+        this.workerDAO = require('../dao/WorkerDAO');
     }
 }
 
@@ -27,8 +27,8 @@ WorkerService.prototype.markOrder = function (request, success, error) {
     this.workerDAO.markOrderAsPacked(request, ()=>{success()}, (cause) => {error(cause)})
 };
 
-WorkerService.prototype.listInstallations = function (request, success, error) {
-    this.workerDAO.getInstallations(request, (installations)=>{success(installations)}, (cause) => {error(cause)})
+WorkerService.prototype.listInstallations = function (success, error) {
+    this.workerDAO.getInstallations((installations)=>{success(installations)}, (cause) => {error(cause)})
 };
 
 module.exports = WorkerService;

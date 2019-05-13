@@ -5,7 +5,7 @@ function CustomerService(customerDAO) {
     if (customerDAO != undefined && customerDAO != null) {
         this.customerDAO = customerDAO;
     } else {
-        this.customerDAO = require('./CustomerDAO');
+        this.customerDAO = require('../dao/CustomerDAO');
     }
 }
 
@@ -26,20 +26,19 @@ CustomerService.prototype.listWindowsOfCustomer = function (request, success) {
 };
 
 CustomerService.prototype.createOrder = function (request, callback) {
-    //TODO: call cutomerDAO
-    request['date'] = new Date().toISOString();
+    request['date'] = new Date();
     request['packaged'] = false;
     request['payed'] = false;
     request['workerid'] = false
     request['oid'] = new md5().update(JSON.stringify({
         customer: request['customerId'],
-        date: request['date']
+        date: request['date'].toISOString()
     })).digest('hex');
+    request['invoice'] = null;
     this.customerDAO.createOrder(request, ()=>{callback()})
 };
 
 CustomerService.prototype.listOrdersOfCustomer = function (customerId, callback) {
-    //TODO: call customerDAO
     this.customerDAO.readOrdersOfCustomer(customerId, (orders) => {callback(orders)})
 };
 

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var srs = require('./CustomerService');
+var srs = require('../service/CustomerService');
 const customerService = new srs()
 
 router.post('/newCustomer', (req, res) => {
