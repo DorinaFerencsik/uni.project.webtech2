@@ -1,9 +1,8 @@
 import React from 'react'
 
-import CustomerActions from '../actions/CustomerActions'
-import CustomerStore from '../store/CustomerStore'
+import CustomerActions from '../../actions/CustomerActions'
 
-class WindowForm extends React.Component{
+class CustomerWindowForm extends React.Component{
     constructor(props){
         super(props)
         this._onChange = this._onChange.bind(this)
@@ -16,20 +15,14 @@ class WindowForm extends React.Component{
     }
 
     _onChange(event){
-        console.log('event handler')
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        console.log('target: ',target)
-        console.log('value: ',value)
-        console.log('name: ',name)
 
         this.setState({
             [name]: value
         });
-        console.log(this.state);
     }
-
 
     render() {
         return (
@@ -80,4 +73,4 @@ class WindowForm extends React.Component{
         )
     }
 }
-export default WindowForm
+export default CustomerWindowForm

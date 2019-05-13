@@ -1,12 +1,12 @@
 import React from 'react'
 
-import WorkerActions from '../actions/WorkerActions'
-import WorkerStore from '../store/WorkerStore'
+import WorkerActions from '../../actions/WorkerActions'
+import WorkerStore from '../../store/WorkerStore'
 
 class WorkerOrder extends React.Component{
     constructor(props){
-        super(props)
-        this._onChange = this._onChange.bind(this)
+        super(props);
+        this._onChange = this._onChange.bind(this);
         this.state = {
             orders : WorkerStore._orders,
             workerId: WorkerStore._workerId
@@ -39,7 +39,6 @@ class WorkerOrder extends React.Component{
                                         <ul className="list-group list-group-flush">
                                             <li className="list-group-item">Window name: {order['windowName']}</li>
                                             <li className="list-group-item">Shutters:
-                                                {console.log(order['shutterId'])}
                                                 {order['shutterId'].map((shutter)=>{
                                                     return (
                                                         <li className="list-group-item d-flex justify-content-between align-items-center">

@@ -6,5 +6,7 @@ module.exports = {
     REMOVE_SINGE_ITEM: 'remove-single-item',
     REMOVE_ALL_ITEMS: 'remove-all-items',
     SHOW_ORDER_FORM: 'show-order-form',
-    PLACE_ORDER: 'place-order'
+    PLACE_ORDER: 'place-order',
+    SHOW_INVOICE: 'show-invoice',
+    HIDE_INVOICE: 'hide-invoice'
 };

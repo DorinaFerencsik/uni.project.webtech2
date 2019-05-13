@@ -1,11 +1,11 @@
 import React from 'react'
 
-import WorkerActions from '../actions/WorkerActions'
-import WorkerStore from '../store/WorkerStore'
+import WorkerActions from '../../actions/WorkerActions'
+import WorkerStore from '../../store/WorkerStore'
 
 class WorkerShutterPart extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
         this._onChange = this._onChange.bind(this);
         this.state = {
             selectedOrder: WorkerStore._selectedOrder
@@ -27,7 +27,7 @@ class WorkerShutterPart extends React.Component{
         return (
             <div>
                 <div className="d-flex justify-content-between align-items-center float-right">
-                    <span className="badge badge-danger badge-pill"
+                    <span className="badge badge-danger badge-pill close-button"
                           onClick={()=>{WorkerActions.closePartOfShutter()}}
                     >X</span>
                 </div>

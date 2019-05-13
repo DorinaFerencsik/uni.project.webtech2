@@ -8,8 +8,6 @@ class WorkerStore extends EventEmitter{
     _installations = [];
     _selectedOrder = null;
 
-
-
     emitChange(){
         this.emit('change')
     }

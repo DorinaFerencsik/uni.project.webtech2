@@ -1,7 +1,7 @@
 import React from 'react'
 
-import CustomerActions from '../actions/CustomerActions'
-import CustomerStore from '../store/CustomerStore'
+import CustomerActions from '../../actions/CustomerActions'
+import CustomerStore from '../../store/CustomerStore'
 
 
 class CustomerOrderForm extends React.Component {
@@ -32,18 +32,13 @@ class CustomerOrderForm extends React.Component {
     }
 
     handleChange(event) {
-        console.log('event handler')
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        console.log('target: ',target)
-        console.log('value: ',value)
-        console.log('name: ',name)
 
         this.setState({
             [name]: value
         });
-        console.log(this.state);
     }
 
     render() {
@@ -96,12 +91,6 @@ class CustomerOrderForm extends React.Component {
                         day: this.state.selectedDay,
                         dayPart: this.state.selectedDayPart
                     })
-
-                    // windowName: data.payload.payload.windowName,
-                    //     shipment: {
-                    //     address: data.payload.payload.address,
-                    //         preferredDay: data.payload.payload.day,
-                    //         preferredDaypart: data.payload.payload.dayPart
                 }}>Place order</button>
            </div>
         )

@@ -10,24 +10,28 @@ import ManagerConstants from '../constants/ManagerConstants'
 import CustomerStore from '../store/CustomerStore'
 import WorkerStore from '../store/WorkerStore'
 import ManagerStore from '../store/ManagerStore'
+import HomeStore from "../store/HomeStore"
 
 import HomeScreen from '../components/HomeScreen'
 
-import Customer from '../components/Customer'
-import CustomerOrder from '../components/CustomerOrder'
-import CustomerWindow from '../components/CustomerWindow'
-import WindowForm from '../components/WindowForm'
-import WebShop from '../components/WebShop'
-import CustomerOrderForm from '../components/CustomerOrderForm'
+import Customer from '../components/customer/Customer'
+import CustomerOrder from '../components/customer/CustomerOrder'
+import CustomerWindow from '../components/customer/CustomerWindow'
+import CustomerWindowForm from '../components/customer/CustomerWindowForm'
+import CustomerWebShop from '../components/customer/CustomerWebShop'
+import CustomerOrderForm from '../components/customer/CustomerOrderForm'
+import CustomerInvoice from '../components/customer/CustomerInvoice'
 
-import Worker from '../components/Worker'
-import WorkerOrder from '../components/WorkerOrder'
-import WorkerInstallation from '../components/WorkerInstallation'
-import WorkerShutterPart from "../components/WorkerShutterPart"
+import Worker from '../components/worker/Worker'
+import WorkerOrder from '../components/worker/WorkerOrder'
+import WorkerInstallation from '../components/worker/WorkerInstallation'
+import WorkerShutterPart from "../components/worker/WorkerShutterPart"
 
-import Manager from '../components/Manager'
-import ManagerOrder from '../components/ManagerOrder'
-import HomeStore from "../store/HomeStore";
+import Manager from '../components/manager/Manager'
+import ManagerOrder from '../components/manager/ManagerOrder'
+import ManagerInvoiceForm from "../components/manager/ManagerInvoiceForm";
+import ManagerStatistic from "../components/manager/ManagerStatistic";
+import ManagerInstallationForm from "../components/manager/ManagerInstallationForm";
 
 class ShutterDispatcher extends Dispatcher{
 
@@ -94,14 +98,14 @@ dispatcher.register((data) => {
                     "Content-Type" : "application/json",
                     "Accept" : "application/json"
                 }
-            }).then(response => {console.log(response);return response.json()})
+            }).then(response => {return response.json()})
                 .then(result => {
                     CustomerStore._webshopItems = result;
                     CustomerStore._selectedOption = data.payload.payload;
                     CustomerStore.emitChange();
 
                     ReactDOM.render(
-                        React.createElement(WebShop),
+                        React.createElement(CustomerWebShop),
                         document.getElementById('customerOptionContent')
                     );
                 });
@@ -150,7 +154,7 @@ dispatcher.register((data)=>{
         return;
     }
     ReactDOM.render(
-        React.createElement(WindowForm),
+        React.createElement(CustomerWindowForm),
         document.getElementById('customerWindowContainer')
     );
 });
@@ -159,42 +163,35 @@ dispatcher.register((data) => {
    if (data.payload.actionType !== CustomerConstants.CREATE_NEW_WINDOW) {
        return;
    }
-   console.log('New window dispatcher is called');
-   console.log(data.payload.payload)
-    fetch('/customer/defineWindow', {
-        method: 'POST',
-        headers : {
-            "Content-Type" : "application/json",
-            "Accept" : "application/json"
-        },
-        body : JSON.stringify({
-            customerId: CustomerStore._customerId,
-            window: {
-                name: data.payload.payload.name,
-                type: data.payload.payload.type,
-                width: data.payload.payload.width,
-                height: data.payload.payload.height,
-            }
-        })
-    }).then(response => {
-        console.log('Window added: ',response);
-        fetch('/customer/'+CustomerStore._customerId+'/listWindows', {
-            headers : {
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
-            }
-        }).then(response => {return response.json()})
-            .then(result => {
-                CustomerStore._windows = result;
-                CustomerStore._selectedOption = 'windows';
-                CustomerStore.emitChange();
-
-                ReactDOM.render(
-                    React.createElement(CustomerWindow),
-                    document.getElementById('customerOptionContent')
-                );
-            });
-    })
+   fetch('/customer/defineWindow', {
+       method: 'POST',
+       headers : {
+           "Content-Type" : "application/json",
+           "Accept" : "application/json"
+       },
+       body : JSON.stringify({
+           customerId: CustomerStore._customerId,
+           window: {
+               name: data.payload.payload.name,
+               type: data.payload.payload.type,
+               width: data.payload.payload.width,
+               height: data.payload.payload.height,
+           }
+       })
+   }).then(response => {
+       fetch('/customer/'+CustomerStore._customerId+'/listWindows', {
+           headers : {
+               "Content-Type" : "application/json",
+               "Accept" : "application/json"
+           }
+       }).then(response => {return response.json()})
+           .then(result => {
+               CustomerStore._windows = result;
+               CustomerStore._selectedOption = 'windows';
+               CustomerStore.emitChange();
+                ReactDOM.unmountComponentAtNode(document.getElementById('customerWindowContainer'))
+           });
+   })
 });
 
 dispatcher.register((data) => {
@@ -304,7 +301,6 @@ dispatcher.register((data) => {
            price: CustomerStore._cartTotalCost
        })
    }).then(response => {
-       console.log('Order created: ',response);
        fetch('/customer/'+CustomerStore._customerId+'/listOrders', {
            headers : {
                "Content-Type" : "application/json",
@@ -327,6 +323,27 @@ dispatcher.register((data) => {
    })
 });
 
+dispatcher.register((data) => {
+    if (data.payload.actionType !== CustomerConstants.SHOW_INVOICE) {
+        return;
+    }
+    CustomerStore._selectedOrder = data.payload.payload;
+    CustomerStore.emitChange();
+
+    ReactDOM.render(
+        React.createElement(CustomerInvoice),
+        document.getElementById('customerOrderContainer')
+    );
+});
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== CustomerConstants.HIDE_INVOICE) {
+        return;
+    }
+    ReactDOM.unmountComponentAtNode(document.getElementById('customerOrderContainer'))
+});
+
+
 
 
 dispatcher.register((data) => {
@@ -341,7 +358,7 @@ dispatcher.register((data) => {
                     "Content-Type" : "application/json",
                     "Accept" : "application/json"
                 }
-            }).then(response => {console.log(response);return response.json()})
+            }).then(response => {return response.json()})
                 .then(result => {
                     WorkerStore._orders = result;
                     WorkerStore._selectedOption = data.payload.payload;
@@ -354,7 +371,7 @@ dispatcher.register((data) => {
                 });
             break;
         case 'installations':
-            fetch('/worker/'+WorkerStore._workerId+'/listInstallations', {
+            fetch('/worker/listInstallations', {
                 headers : {
                     "Content-Type" : "application/json",
                     "Accept" : "application/json"
@@ -395,19 +412,11 @@ dispatcher.register((data) => {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             }
-        }).then(response => {
-            console.log(response);
-            return response.json()
-        })
+        }).then(response => {return response.json()})
             .then(result => {
                 WorkerStore._orders = result;
                 WorkerStore._selectedOption = 'orders';
                 WorkerStore.emitChange();
-
-                // ReactDOM.render(
-                //     React.createElement(WorkerOrder),
-                //     document.getElementById('workerOptionContent')
-                // );
             });
     });
 });
@@ -453,10 +462,7 @@ dispatcher.register((data)=> {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             }
-        }).then(response => {
-            console.log(response);
-            return response.json()
-        })
+        }).then(response => {return response.json()})
             .then(result => {
                 WorkerStore._orders = result;
                 WorkerStore._selectedOption = 'orders';
@@ -473,7 +479,6 @@ dispatcher.register((data) => {
     if (data.payload.actionType !== ManagerConstants.SELECT_MANAGER_OPTION) {
         return;
     }
-    console.log('Manager dispatcher')
     switch (data.payload.payload) {
         case 'orders':
             fetch('/manager/listOrders', {
@@ -481,42 +486,141 @@ dispatcher.register((data) => {
                     "Content-Type" : "application/json",
                     "Accept" : "application/json"
                 }
-            }).then(response => {console.log(response);return response.json()})
+            }).then(response => {return response.json()})
                 .then(result => {
-                    WorkerStore._orders = result;
-                    WorkerStore._selectedOption = data.payload.payload;
-                    WorkerStore.emitChange();
+                    ManagerStore._orders = result;
+                    ManagerStore._selectedOption = data.payload.payload;
+                    ManagerStore.emitChange();
 
                     ReactDOM.render(
-                        React.createElement(WorkerOrder),
+                        React.createElement(ManagerOrder),
                         document.getElementById('managerOptionContent')
                     );
                 });
             break;
-        case 'installations':
-            // fetch('/worker/'+WorkerStore._workerId+'/listInstallations', {
-            //     headers : {
-            //         "Content-Type" : "application/json",
-            //         "Accept" : "application/json"
-            //     }
-            // }).then(response => {return response.json()})
-            //     .then(result => {
-            //         WorkerStore._installations = result;
-            //         WorkerStore._selectedOption = data.payload.payload;
-            //         WorkerStore.emitChange();
-            //
-            //         ReactDOM.render(
-            //             React.createElement(WorkerInstallation),
-            //             document.getElementById('workerOptionContent')
-            //         );
-            //     });
-            ReactDOM.render(
-                        React.createElement(WorkerInstallation),
+        case 'statistics':
+            fetch('/manager/getStatistics', {
+                headers : {
+                    "Content-Type" : "application/json",
+                    "Accept" : "application/json"
+                }
+            }).then(response => {return response.json()})
+                .then(result => {
+                    ManagerStore._statistics = result;
+                    ManagerStore._selectedOption = data.payload.payload;
+                    ManagerStore.emitChange();
+                    ReactDOM.render(
+                        React.createElement(ManagerStatistic),
                         document.getElementById('managerOptionContent')
                     );
+                    // ReactDOM.unmountComponentAtNode(document.getElementById('managerOrderContainer'))
+                });
             break;
     }
 
 });
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== ManagerConstants.SHOW_INVOICE_FORM) {
+        return;
+    }
+    ManagerStore._selectedOrder = data.payload.payload;
+    ManagerStore.emitChange();
+
+    ReactDOM.render(
+        React.createElement(ManagerInvoiceForm),
+        document.getElementById('managerOrderContainer')
+    );
+});
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== ManagerConstants.HIDE_INVOICE_FORM) {
+        return;
+    }
+    ReactDOM.unmountComponentAtNode(document.getElementById('managerOrderContainer'))
+});
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== ManagerConstants.CREATE_INVOICE) {
+        return;
+    }
+    fetch('/manager/createInvoice', {
+        method: 'POST',
+        headers : {
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        },
+        body : JSON.stringify({
+            dueDate: data.payload.payload,
+            orderId: ManagerStore._selectedOrder.oid
+        })
+    }).then(response => {
+        fetch('/manager/listOrders', {
+            headers : {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            }
+        }).then(response => {return response.json()})
+            .then(result => {
+                ManagerStore._orders = result;
+                ManagerStore._selectedOption = 'orders';
+                ManagerStore.emitChange();
+                ReactDOM.unmountComponentAtNode(document.getElementById('managerOrderContainer'))
+            });
+    });
+});
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== ManagerConstants.SHOW_INSTALLATION_FORM) {
+        return;
+    }
+    ManagerStore._selectedOrder = data.payload.payload;
+    ManagerStore.emitChange();
+
+    ReactDOM.render(
+        React.createElement(ManagerInstallationForm),
+        document.getElementById('managerOrderContainer')
+    );
+});
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== ManagerConstants.HIDE_INSTALLATION_FORM) {
+        return;
+    }
+    ReactDOM.unmountComponentAtNode(document.getElementById('managerOrderContainer'))
+});
+
+dispatcher.register((data) => {
+    if (data.payload.actionType !== ManagerConstants.CREATE_INSTALLATION) {
+        return;
+    }
+    fetch('/manager/createInstallation', {
+        method: 'POST',
+        headers : {
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        },
+        body : JSON.stringify({
+            date: data.payload.payload.date,
+            dayPart: data.payload.payload.dayPart,
+            orderId: ManagerStore._selectedOrder.oid
+        })
+    }).then(response => {
+        fetch('/manager/listOrders', {
+            headers : {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            }
+        }).then(response => {return response.json()})
+            .then(result => {
+                ManagerStore._orders = result;
+                ManagerStore._selectedOption = 'orders';
+                ManagerStore.emitChange();
+                ReactDOM.unmountComponentAtNode(document.getElementById('managerOrderContainer'))
+            });
+    });
+});
+
+
 
 export default dispatcher;

@@ -3,6 +3,8 @@ import {EventEmitter} from 'events'
 class ManagerStore extends EventEmitter{
 
     _selectedOption = null;
+    _selectedOrder = null;
+    _statistics = null;
 
     emitChange(){
         this.emit('change')

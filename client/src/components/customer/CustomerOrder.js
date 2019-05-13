@@ -1,7 +1,7 @@
 import React from 'react'
 
-import CustomerActions from '../actions/CustomerActions'
-import CustomerStore from '../store/CustomerStore'
+import CustomerActions from '../../actions/CustomerActions'
+import CustomerStore from '../../store/CustomerStore'
 
 class CustomerOrder extends React.Component{
     constructor(props){
@@ -12,7 +12,6 @@ class CustomerOrder extends React.Component{
 
     _onChange(){
         this.setState({windows : CustomerStore._windows})
-        // console.log('CUSTOMER: on change func')
     }
     componentDidMount(){
         CustomerStore.addChangeListener(this._onChange)
@@ -38,7 +37,6 @@ class CustomerOrder extends React.Component{
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">Window name: {order['windowName']}</li>
                                         <li className="list-group-item">Shutters:
-                                            {console.log(order['shutterId'])}
                                             {order['shutterId'].map((shutter)=>{
                                                 return (
                                                 <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -54,7 +52,13 @@ class CustomerOrder extends React.Component{
                                         <li className="list-group-item d-flex justify-content-between align-items-center">Price:
                                             <span className="badge badge-info badge-pill">{order['price']} EUR</span>
                                         </li>
-
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">Invoice:
+                                            {order['invoice'] === null ?
+                                                (<span className="badge badge-warning badge-pill">In progress</span>)
+                                                :
+                                                (<button className="btn btn-info" onClick={()=>{CustomerActions.showInvoiceOfOrder(order)}}>View</button>)
+                                            }
+                                        </li>
                                         </ul>
                                     </div>
                             </div>

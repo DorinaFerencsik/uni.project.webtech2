@@ -57,6 +57,19 @@ class CustomerActions {
             payload: order
         })
     }
+
+    showInvoiceOfOrder(order) {
+        ShutterDispatcher.handleViewAction({
+            actionType: CustomerConstants.SHOW_INVOICE,
+            payload: order
+        })
+    }
+
+    hideInvoiceOfOrder(order) {
+        ShutterDispatcher.handleViewAction({
+            actionType: CustomerConstants.HIDE_INVOICE
+        })
+    }
 }
 
 export default new CustomerActions();

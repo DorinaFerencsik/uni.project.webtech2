@@ -1,18 +1,17 @@
 import React from 'react'
 
-import CustomerActions from '../actions/CustomerActions'
-import CustomerStore from '../store/CustomerStore'
+import CustomerActions from '../../actions/CustomerActions'
+import CustomerStore from '../../store/CustomerStore'
 
 class CustomerWindow extends React.Component{
     constructor(props){
-        super(props)
-        this._onChange = this._onChange.bind(this)
+        super(props);
+        this._onChange = this._onChange.bind(this);
         this.state = {windows : CustomerStore._windows}
     }
 
     _onChange(){
         this.setState({windows : CustomerStore._windows})
-        // console.log('CUSTOMER: on change func')
     }
     componentDidMount(){
         CustomerStore.addChangeListener(this._onChange)
@@ -21,7 +20,6 @@ class CustomerWindow extends React.Component{
     componentWillUnmount(){
         CustomerStore.removeChangeListener(this._onChange)
     }
-
 
     render() {
         return (

@@ -1,10 +1,8 @@
 
 import React from 'react'
 
-import CustomerActions from '../actions/CustomerActions'
-import CustomerStore from '../store/CustomerStore'
-
-import CustomerOrderForm from './CustomerOrderForm'
+import CustomerActions from '../../actions/CustomerActions'
+import CustomerStore from '../../store/CustomerStore'
 
 class CustomerCart extends React.Component{
     constructor(props){

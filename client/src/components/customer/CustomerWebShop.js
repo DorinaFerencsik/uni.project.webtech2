@@ -1,9 +1,9 @@
 import React from 'react'
 
-import CustomerActions from '../actions/CustomerActions'
-import CustomerStore from '../store/CustomerStore'
+import CustomerActions from '../../actions/CustomerActions'
+import CustomerStore from '../../store/CustomerStore'
 
-class WebShop extends React.Component{
+class CustomerWebShop extends React.Component{
     constructor(props){
         super(props)
         this._onChange = this._onChange.bind(this)
@@ -12,7 +12,6 @@ class WebShop extends React.Component{
 
     _onChange(){
         this.setState({webshopItems : CustomerStore._webshopItems})
-        // console.log('CUSTOMER: on change func')
     }
     componentDidMount(){
         CustomerStore.addChangeListener(this._onChange)
@@ -55,4 +54,4 @@ class WebShop extends React.Component{
         )
     }
 }
-export default WebShop
+export default CustomerWebShop

@@ -10,6 +10,7 @@ class CustomerStore extends EventEmitter{
     _customerId = '001';
     _windows = [];
     _showOrderForm = false;
+    _selectedOrder = null;
 
     _weekDays = {
         Mon: 'Monday',
@@ -23,9 +24,7 @@ class CustomerStore extends EventEmitter{
     _dayParts = {
         AM: 'AM',
         PM: 'PM'
-    }
-
-
+    };
 
     emitChange(){
         this.emit('change')
