@@ -2,8 +2,31 @@
 
 $card-backgroud: #074482 !default;
 $card-text: #fff !default;
-
+$option-selector-background: #711515 !default;
 .role-card {
   background-color: $card-backgroud;
   color: $card-text
+}
+
+.close-button{
+  padding: 10px;
+  font-weight: bold;
+}
+.close-button:hover {
+  cursor: pointer;
+}
+
+.option-selector-option {
+  background-color: $option-selector-background;
+  color: $card-text;
+  border-color: #fff;
+}
+.option-selector-option:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.default-navbar {
+  display: flex;
+  flex-wrap: wrap;
 }

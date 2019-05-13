@@ -9660,4 +9660,29 @@ h3 {
   color: #fff;
 }
 
+.close-button {
+  padding: 10px;
+  font-weight: bold;
+}
+
+.close-button:hover {
+  cursor: pointer;
+}
+
+.option-selector-option {
+  background-color: #711515;
+  color: #fff;
+  border-color: #fff;
+}
+
+.option-selector-option:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.default-navbar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /*# sourceMappingURL=App.css.map */
