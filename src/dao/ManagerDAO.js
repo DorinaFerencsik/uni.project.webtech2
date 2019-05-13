@@ -40,14 +40,12 @@ function readOrders(callback) {
 
         const db = client.db(dbName);
         const collection = db.collection(orderCollection);
-        console.log('coll: ',installationCollection);
         const instCollection = db.collection(installationCollection);
 
         collection.find().toArray((err, docs) => {
             assert.equal(null, err);
                 instCollection.find().toArray((err, installation) => {
                     assert.equal(null, err, "Worker ID is not valid");
-                    console.log(installation);
                     for (var i in docs) {
                         for(var j in installation) {
                             if (docs[i].oid == installation[j].orderId) {
