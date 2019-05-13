@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 const port = 8080;
 const customerController = require('./src/controller/CustomerController');
@@ -10,7 +11,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
-// app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/customer', customerController);
 app.use('/worker', workerController);
